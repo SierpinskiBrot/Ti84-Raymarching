@@ -8,6 +8,16 @@ Must download the required libraries:
 
 https://github.com/CE-Programming/libraries
 
+
+v1.1.0 - Takes 451s (~7.5 mins) to draw
+
+-Found some more assembly optimizations
+
+-Reduced from 500 to 200 ray marches
+
+![Screenshot](/bin/23.png)
+
+
 v1.0.3 - Takes 972s (~16 mins) to draw
 
 -Less floating point math

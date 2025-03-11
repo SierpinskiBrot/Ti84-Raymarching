@@ -14,6 +14,7 @@ Fixed24 distanceEstimator(Vec3 pos) {
     return dist;
 }
 
+//Fast inverse square root from quake
 Fixed24 Q_rsqrt(Fixed24 x)
 {
     float number = x.n / (float)(1 << POINT);
@@ -31,6 +32,7 @@ Fixed24 Q_rsqrt(Fixed24 x)
 
     return Fixed24(y);
 }
+
 
 int main(void)
 {
@@ -99,8 +101,8 @@ int main(void)
             distance = Fixed24(1);
             counter = 0;
             totalDistance = Fixed24(0);
-            //March forward 500 times
-            while (distance > distanceThreshold && counter < 500) {
+            //March forward 200 times
+            while (distance > distanceThreshold && counter < 200) {
         
                 //Keep the ray within (-1,-1,-1) to (1,1,1), this is how there are infinite spheres
                 while (rayPos.x < Fixed24(-1)) rayPos.x += Fixed24(2);
@@ -138,9 +140,13 @@ int main(void)
                 if (dotProd > Fixed24(1)) dotProd = Fixed24(1); //Should never be more than 1 because the vectors are normalized but just making sure
 
                 //Inverse square root of distance for lighting
-                //inverseSqrt = div(Fixed24(1), sqrt(totalDistance));
-                inverseSqrt = Q_rsqrt(totalDistance);
-                if (inverseSqrt > Fixed24(1)) inverseSqrt = Fixed24(1); //This one can actually be greater than one
+                if (totalDistance < Fixed24(1)) {
+                    inverseSqrt = 1;
+                }
+                else {
+                    //inverseSqrt = Q_rsqrt(totalDistance);
+                    inverseSqrt = div(Fixed24(1), sqrt(totalDistance));
+                }
                 
 
                 //Start with white, darken based on inverse square root and angle of incidence

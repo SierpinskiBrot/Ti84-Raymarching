@@ -7,9 +7,9 @@ Section          Base   Top    High   Length
 .init.reruncheck D1A935 D1A935             0h
 .init            D1A935 D1A955            20h
 .fini            D1A955 D1A989            34h
-.text            D1A989 D1B5B7           C2Eh
-.data            D1B5B7 D1B5B7             0h
-.rodata          D1B5B7 D1B5D9            22h
+.text            D1A989 D1B3B3           A2Ah
+.data            D1B3B3 D1B3B3             0h
+.rodata          D1B3B3 D1B3D5            22h
 .init_array      000000 000000             0h
 .ctors           000000 000000             0h
 .dtors           000000 000000             0h
@@ -34,35 +34,27 @@ __frameset0                = D1A997
 __imulu                    = D1A9A2
 __ishl                     = D1A9D2
 __ishru                    = D1A9F8
-__ldivs                    = D1AA39
-__ldivs_lrems_common       = D1AA51
-__ldivu                    = D1AA62
-__ldvrmu                   = D1AA6C
-__lneg                     = D1AA94
-__lshrs                    = D1AAA1
-__lshrs.hijack_lshru       = D1AAAD
-__lshru                    = D1AABC
-__lsub                     = D1AACC
-__fadd                     = 000270
+__lshrs.hijack_lshru       = D1AA45
+__lshru                    = D1AA54
+__lsub                     = D1AA64
 __fmul                     = 000288
 __ftol                     = 00027C
 __ftoul                    = 00027C
 __ltof                     = 000284
 __setflag                  = 000218
 __ultof                    = 000280
-__sor                      = D1AAD6
+__sor                      = D1AA6E
 __sshl                     = D1A9D2
-__ixor                     = D1AADF
-_atomic_load_increasing_32 = D1AAF6
-_os_DisableHomeTextBuffer  = D1AB1B
-_os_EnableHomeTextBuffer   = D1AB2D
+__ixor                     = D1AA77
+_atomic_load_increasing_32 = D1AA8E
+_os_DisableHomeTextBuffer  = D1AAB3
+_os_EnableHomeTextBuffer   = D1AAC5
 _os_GetCSC                 = 021D3C
-_clock                     = D1AB3F
-_sqrtf                     = 000298
-.missingappvar             = D1B5B7
-.libloadname               = D1B5BC
+_clock                     = D1AAD7
+.missingappvar             = D1B3B3
+.libloadname               = D1B3B8
 .libloadnamelen            = 000007
-.webaddress                = D1B5C4
+.webaddress                = D1B3C0
 ___init_clock              = D1A91A
 __start                    = D1A935
 ___exithl                  = D1A955
@@ -71,17 +63,17 @@ skip.__Exit                = D1A955
 skip._abort                = D1A955
 _exit.sp                   = D1A956
 _exit.flash_wait_states    = D1A960
-__Z4sqrtR7Fixed24          = D1AB4A
-__ZN7Fixed24C2Ef           = D1AB87
-__Z3dotR4Vec3S0_           = D1ABA8
-__ZN4Vec34normEv           = D1AC06
-__ZN4Vec312norm_squaredEv  = D1AC35
-__Z7Q_rsqrt7Fixed24        = D1AC7B
-_main                      = D1ACFD
-__ZN4Vec3C2Efff            = D1B2DF
-__ZNK4Vec3mlE7Fixed24      = D1B395
-_fp_mul                    = D1B3EF
-_fp_sqr                    = D1B503
+__Z3dotR4Vec3S0_           = D1AAE2
+__ZN4Vec34normEv           = D1AB40
+__ZN4Vec312norm_squaredEv  = D1AB6C
+__ZN7Fixed24C2Ef           = D1ABB2
+_main                      = D1ABD3
+__ZN4Vec3C2Efff            = D1B154
+__ZNK4Vec3mlE7Fixed24      = D1B20A
+_fp_mul                    = D1B264
+_fp_sqr                    = D1B2D9
+_fp_div                    = D1B324
+_fp_sqrt                   = D1B373
 lib.LibLoad                = D1A8EB
 _#gfx_Begin                = D1A8FE
 _#gfx_End                  = D1A902
