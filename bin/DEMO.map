@@ -1,0 +1,81 @@
+Section          Base   Top    High   Length
+---------------- ------ ------ ------ -------
+.icon            D1A882 D1A89B            19h
+.init.libs       D1A89B D1A8F3            58h
+.libs            D1A8F3 D1A926            33h
+.init.clock      D1A926 D1A941            1Bh
+.init.reruncheck D1A941 D1A941             0h
+.init            D1A941 D1A96B            2Ah
+.fini            D1A96B D1A99F            34h
+.text            D1A99F D1B147           7A8h
+.data            D1B147 D1B14B             4h
+.rodata          D1B14B D1B16D            22h
+.init_array      000000 000000             0h
+.ctors           000000 000000             0h
+.dtors           000000 000000             0h
+.fini_array      000000 000000             0h
+.bss             D052C6 D052D2 D13FD8      Ch
+.header          D1A87F D1A882             3h
+
+Label                        Value
+--------------------------   ------
+___low_bss                 = D052C6
+___len_bss                 = 00000C
+___heaptop                 = D13FD8
+___heapbot                 = D052D2
+___libs                    = D1A8F3
+___init_array_count        = 000000
+___ctors_count             = 000000
+___dtors_count             = 000000
+___fini_array_count        = 000000
+__stack                    = D1A87E
+__fneg                     = D1A99F
+__frameset                 = D1A9AC
+__ishl                     = D1A9BA
+__ishru                    = D1A9E0
+__lshrs.hijack_lshru       = D1AA2D
+__lshru                    = D1AA3C
+__lsub                     = D1AA4C
+__fadd                     = 000270
+__fcmp                     = 000274
+__fdiv                     = 000278
+__fmul                     = 000288
+__fsub                     = 000290
+__ftol                     = 00027C
+__ftoul                    = 00027C
+__ltof                     = 000284
+__ultof                    = 000280
+__sor                      = D1AA56
+__sshl                     = D1A9BA
+_atomic_load_increasing_32 = D1AA5F
+_os_DisableHomeTextBuffer  = D1AA84
+_os_EnableHomeTextBuffer   = D1AA96
+_os_GetCSC                 = 021D3C
+_clock                     = D1AAA8
+_sqrtf                     = 000298
+_sqrt                      = 000298
+.missingappvar             = D1B14B
+.libloadname               = D1B150
+.libloadnamelen            = 000007
+.webaddress                = D1B158
+___init_clock              = D1A926
+__start                    = D1A941
+___exithl                  = D1A96B
+skip._exit                 = D1A96B
+skip.__Exit                = D1A96B
+skip._abort                = D1A96B
+_exit.sp                   = D1A96C
+_exit.flash_wait_states    = D1A976
+_distanceEstimator         = D1AAB3
+_main                      = D1AB5B
+_sphereCenter              = D052C6
+_sphereRadius              = D1B147
+lib.LibLoad                = D1A8F3
+_#gfx_Begin                = D1A906
+_#gfx_End                  = D1A90A
+_#gfx_SetColor             = D1A90E
+_#gfx_FillScreen           = D1A912
+_#gfx_SetPixel             = D1A916
+_#gfx_SwapDraw             = D1A91A
+_#gfx_PrintInt             = D1A91E
+_#gfx_SetTextXY            = D1A922
