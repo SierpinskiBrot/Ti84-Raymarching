@@ -2,4 +2,4 @@
 
 Draws different shapes, pixels, text.
 
-![Screenshot](screenshot.png)
+![Screenshot](/bin/15.png)
