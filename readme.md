@@ -9,3 +9,7 @@ https://github.com/CE-Programming/libraries
 v1.0.0 - Takes 1381s (~23 mins) to draw
 
 ![Screenshot](/bin/15.png)
+
+v1.0.1 - Takes 1240s (~21 mins) to draw
+
+![Screenshot](/bin/16.png)

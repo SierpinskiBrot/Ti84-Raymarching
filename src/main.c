@@ -10,16 +10,17 @@ volatile uint16_t* VRAM = (uint16_t*)0xD40000;
 
 float sphereRadius = 0.5;
 
+//Distance estimator for raymarching
 float distanceEstimator(float p[3]) {
-    float dist;
-    dist = sqrt(p[0] * p[0] + p[1] * p[1] + p[2] * p[2]) - sphereRadius;
+    //Distance to nearest sphere is the normalized position vector minus the sphere's radius
+    float dist = sqrt(p[0] * p[0] + p[1] * p[1] + p[2] * p[2]) - sphereRadius;
     return dist;
 }
 
 
 int main(void)
 {
-    //Stary gfx
+    //Start gfx
     gfx_Begin();
 
     //Create the pallate of grey
@@ -30,7 +31,7 @@ int main(void)
     //Clear the screen
     gfx_FillScreen(0);
 
-    // Start the clock
+    // Start the timer
     clock_t start = clock();
 
     //Initializing variables
@@ -48,6 +49,8 @@ int main(void)
     float g;
     float b;
     float cameraWidth = 0.25; //Actully camera height/2 but dont worry
+
+
 
     //-----Main render loop
 
@@ -133,7 +136,7 @@ int main(void)
         }
     }
 
-    //Stop the clock
+    //Stop the timer
     clock_t end = clock();
 
     //Calculate the elapsed time in seconds
