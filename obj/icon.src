@@ -5,5 +5,5 @@
 
 	public ___description
 ___description:
-	db	"CE C Toolchain Demo", 0
+	db	"Raymarching", 0
 ___prgm_init:

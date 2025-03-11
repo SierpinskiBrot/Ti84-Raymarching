@@ -3,49 +3,36 @@
 	section	.text,"ax",@progbits
 	public	_distanceEstimator
 _distanceEstimator:
-	ld	hl, -7
+	ld	hl, -6
 	call	__frameset
 	ld	iy, (ix + 6)
-	ld	bc, (iy)
-	ld	hl, (_sphereCenter)
-	ld	a, (_sphereCenter+3)
-	ld	e, a
-	ld	a, (iy + 3)
-	call	__fsub
-	ld	(ix - 7), bc
-	ld	d, a
-	ld	iy, (ix + 6)
+	ld	hl, (iy)
+	ld	(ix - 6), hl
+	ld	d, (iy + 3)
 	ld	bc, (iy + 4)
-	ld	hl, (_sphereCenter+4)
-	ld	a, (_sphereCenter+7)
-	ld	e, a
-	ld	iy, (ix + 6)
 	ld	a, (iy + 7)
-	call	__fsub
 	push	bc
 	pop	hl
 	ld	e, a
 	call	__fmul
-	ld	(ix - 3), bc
-	ld	(ix - 4), a
-	ld	bc, (ix - 7)
+	push	bc
+	pop	iy
+	ld	(ix - 3), a
+	ld	bc, (ix - 6)
 	ld	a, d
 	push	bc
 	pop	hl
 	ld	e, d
 	call	__fmul
-	ld	hl, (ix - 3)
-	ld	e, (ix - 4)
+	lea	hl, iy
+	ld	e, (ix - 3)
 	call	__fadd
 	ld	(ix - 3), bc
 	ld	d, a
 	ld	iy, (ix + 6)
 	ld	bc, (iy + 8)
-	ld	hl, (_sphereCenter+8)
-	ld	a, (_sphereCenter+11)
-	ld	e, a
+	ld	iy, (ix + 6)
 	ld	a, (iy + 11)
-	call	__fsub
 	push	bc
 	pop	hl
 	ld	e, a
@@ -738,11 +725,6 @@ BB1_63:
 	public	_VRAM
 _VRAM:
 	dl	13893632
-
-	section	.bss,"aw",@nobits
-	public	_sphereCenter
-_sphereCenter:
-	rb	12
 
 	section	.data,"aw",@progbits
 	public	_sphereRadius

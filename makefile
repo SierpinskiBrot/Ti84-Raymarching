@@ -4,7 +4,7 @@
 
 NAME = DEMO
 ICON = icon.png
-DESCRIPTION = "CE C Toolchain Demo"
+DESCRIPTION = "Raymarching"
 COMPRESSED = NO
 
 CFLAGS = -Wall -Wextra -Oz
