@@ -5,6 +5,7 @@ obj/src/main.cpp.bc: src\main.cpp \
   C:\Users\gbols\OneDrive\Desktop\Ti84things\CEdev\include\stdlib.h \
   C:\Users\gbols\OneDrive\Desktop\Ti84things\CEdev\include\stdbool.h \
   C:\Users\gbols\OneDrive\Desktop\Ti84things\CEdev\include\time.h \
+  C:\Users\gbols\OneDrive\Desktop\Ti84things\CEdev\include\math.h \
   src\fixedpoint.h \
   C:\Users\gbols\OneDrive\Desktop\Ti84things\CEdev\include\tice.h \
   C:\Users\gbols\OneDrive\Desktop\Ti84things\CEdev\include\sys\basicusb.h \
@@ -26,6 +27,4 @@ obj/src/main.cpp.bc: src\main.cpp \
   C:\Users\gbols\OneDrive\Desktop\Ti84things\CEdev\include\ti\ui.h \
   C:\Users\gbols\OneDrive\Desktop\Ti84things\CEdev\include\ti\tokens.h \
   C:\Users\gbols\OneDrive\Desktop\Ti84things\CEdev\include\ti\vars.h \
-  src\asmmath.h \
-  C:\Users\gbols\OneDrive\Desktop\Ti84things\CEdev\include\math.h \
-  src\vector.h
+  src\asmmath.h src\vector.h

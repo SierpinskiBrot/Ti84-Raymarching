@@ -2,14 +2,14 @@ Section          Base   Top    High   Length
 ---------------- ------ ------ ------ -------
 .icon            D1A882 D1A893            11h
 .init.libs       D1A893 D1A8EB            58h
-.libs            D1A8EB D1A91E            33h
-.init.clock      D1A91E D1A939            1Bh
-.init.reruncheck D1A939 D1A939             0h
-.init            D1A939 D1A959            20h
-.fini            D1A959 D1A98D            34h
-.text            D1A98D D1B4FE           B71h
-.data            D1B4FE D1B4FE             0h
-.rodata          D1B4FE D1B520            22h
+.libs            D1A8EB D1A91A            2Fh
+.init.clock      D1A91A D1A935            1Bh
+.init.reruncheck D1A935 D1A935             0h
+.init            D1A935 D1A955            20h
+.fini            D1A955 D1A989            34h
+.text            D1A989 D1B5B7           C2Eh
+.data            D1B5B7 D1B5B7             0h
+.rodata          D1B5B7 D1B5D9            22h
 .init_array      000000 000000             0h
 .ctors           000000 000000             0h
 .dtors           000000 000000             0h
@@ -29,62 +29,64 @@ ___ctors_count             = 000000
 ___dtors_count             = 000000
 ___fini_array_count        = 000000
 __stack                    = D1A87E
-__frameset                 = D1A98D
-__frameset0                = D1A99B
-__ishl                     = D1A9A6
-__ishru                    = D1A9CC
-__ldivs                    = D1AA0D
-__ldivs_lrems_common       = D1AA25
-__ldivu                    = D1AA36
-__ldvrmu                   = D1AA40
-__lneg                     = D1AA68
-__lshrs.hijack_lshru       = D1AA81
-__lshru                    = D1AA90
-__lsub                     = D1AAA0
+__frameset                 = D1A989
+__frameset0                = D1A997
+__imulu                    = D1A9A2
+__ishl                     = D1A9D2
+__ishru                    = D1A9F8
+__ldivs                    = D1AA39
+__ldivs_lrems_common       = D1AA51
+__ldivu                    = D1AA62
+__ldvrmu                   = D1AA6C
+__lneg                     = D1AA94
+__lshrs                    = D1AAA1
+__lshrs.hijack_lshru       = D1AAAD
+__lshru                    = D1AABC
+__lsub                     = D1AACC
 __fadd                     = 000270
-__fdiv                     = 000278
 __fmul                     = 000288
 __ftol                     = 00027C
 __ftoul                    = 00027C
 __ltof                     = 000284
 __setflag                  = 000218
 __ultof                    = 000280
-__sor                      = D1AAAA
-__sshl                     = D1A9A6
-__ixor                     = D1AAB3
-_atomic_load_increasing_32 = D1AACA
-_os_DisableHomeTextBuffer  = D1AAEF
-_os_EnableHomeTextBuffer   = D1AB01
+__sor                      = D1AAD6
+__sshl                     = D1A9D2
+__ixor                     = D1AADF
+_atomic_load_increasing_32 = D1AAF6
+_os_DisableHomeTextBuffer  = D1AB1B
+_os_EnableHomeTextBuffer   = D1AB2D
 _os_GetCSC                 = 021D3C
-_clock                     = D1AB13
+_clock                     = D1AB3F
 _sqrtf                     = 000298
-.missingappvar             = D1B4FE
-.libloadname               = D1B503
+.missingappvar             = D1B5B7
+.libloadname               = D1B5BC
 .libloadnamelen            = 000007
-.webaddress                = D1B50B
-___init_clock              = D1A91E
-__start                    = D1A939
-___exithl                  = D1A959
-skip._exit                 = D1A959
-skip.__Exit                = D1A959
-skip._abort                = D1A959
-_exit.sp                   = D1A95A
-_exit.flash_wait_states    = D1A964
-__Z4sqrtR7Fixed24          = D1AB1E
-__ZN7Fixed24C2Ef           = D1AB5B
-__Z3dotR4Vec3S0_           = D1AB7C
-__ZN4Vec34normEv           = D1ABDA
-__ZN4Vec312norm_squaredEv  = D1AC09
-_main                      = D1AC4F
-__ZNK4Vec3mlE7Fixed24      = D1B2DC
-_fp_mul                    = D1B336
-_fp_sqr                    = D1B44A
+.webaddress                = D1B5C4
+___init_clock              = D1A91A
+__start                    = D1A935
+___exithl                  = D1A955
+skip._exit                 = D1A955
+skip.__Exit                = D1A955
+skip._abort                = D1A955
+_exit.sp                   = D1A956
+_exit.flash_wait_states    = D1A960
+__Z4sqrtR7Fixed24          = D1AB4A
+__ZN7Fixed24C2Ef           = D1AB87
+__Z3dotR4Vec3S0_           = D1ABA8
+__ZN4Vec34normEv           = D1AC06
+__ZN4Vec312norm_squaredEv  = D1AC35
+__Z7Q_rsqrt7Fixed24        = D1AC7B
+_main                      = D1ACFD
+__ZN4Vec3C2Efff            = D1B2DF
+__ZNK4Vec3mlE7Fixed24      = D1B395
+_fp_mul                    = D1B3EF
+_fp_sqr                    = D1B503
 lib.LibLoad                = D1A8EB
 _#gfx_Begin                = D1A8FE
 _#gfx_End                  = D1A902
 _#gfx_SetColor             = D1A906
 _#gfx_FillScreen           = D1A90A
 _#gfx_SetPixel             = D1A90E
-_#gfx_SwapDraw             = D1A912
-_#gfx_PrintInt             = D1A916
-_#gfx_SetTextXY            = D1A91A
+_#gfx_PrintInt             = D1A912
+_#gfx_SetTextXY            = D1A916
