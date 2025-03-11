@@ -6,6 +6,12 @@ https://ce-programming.github.io/toolchain/index.html
 Must download the required libraries:
 https://github.com/CE-Programming/libraries
 
+v1.0.2 - Takes 1027s (~17 mins) to draw
+-Stole fixedpoint and vector libraries from https://github.com/TheScienceElf/TI-84-CE-Raytracing
+-Using mainly fixed points instead of floats now
+
+![Screenshot](/bin/17.png)
+
 v1.0.1 - Takes 1240s (~21 mins) to draw
 
 ![Screenshot](/bin/16.png)
