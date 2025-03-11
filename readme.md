@@ -1,5 +1,10 @@
-### GraphX Shapes Demo
+### Raymarching on a Ti-84
 
-Draws different shapes, pixels, text.
+Using CE/C++ Toolchain:
+https://ce-programming.github.io/toolchain/index.html
 
+Must download the required libraries:
+https://github.com/CE-Programming/libraries
+
+v1.0.0
 ![Screenshot](/bin/15.png)
