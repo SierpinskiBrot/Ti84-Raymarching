@@ -27,4 +27,4 @@ obj/src/main.cpp.bc: src\main.cpp \
   C:\Users\gbols\OneDrive\Desktop\Ti84things\CEdev\include\ti\ui.h \
   C:\Users\gbols\OneDrive\Desktop\Ti84things\CEdev\include\ti\tokens.h \
   C:\Users\gbols\OneDrive\Desktop\Ti84things\CEdev\include\ti\vars.h \
-  src\asmmath.h src\vector.h
+  src\asmmath.h src\vector.h src\color.h

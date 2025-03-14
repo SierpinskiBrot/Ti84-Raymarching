@@ -9,6 +9,15 @@ Must download the required libraries:
 https://github.com/CE-Programming/libraries
 
 
+v1.1.1 - Takes 489s (~8.2 mins) to draw
+
+-Bigger colour pallate
+
+-green based on number of raymarches to get to position
+
+![Screenshot](/bin/38.png)
+
+
 v1.1.0 - Takes 451s (~7.5 mins) to draw
 
 -Found some more assembly optimizations

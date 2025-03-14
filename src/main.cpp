@@ -1,58 +1,134 @@
 #include <graphx.h>
 #include <time.h>
 #include <math.h>
+
 #include "fixedpoint.h"
 #include "vector.h"
+#include "color.h"
 
-//volatile uint16_t* VRAM = (uint16_t*)0xD40000;
+volatile Color* VRAM = (Color*)0xD40000;
 
-float sphereRadius = 0.5F;
+const Fixed24 sphereRadius(0.5F);
+
+const float cameraWidth = 0.25F; //Actully camera height/2 but dont worry
+const Fixed24 multiplicationFactor(cameraWidth / 120.0F); //do this conversion now to save a little time later
+
+const float horizontalFov = 126.8698976F; //this shit is NOT fov im doing the calculation wrong
+const float divisionFactor(40 * tanf(3.14159F * horizontalFov / 360.0F));
+const Fixed24 divisionFactorReciprocal(1.0F / divisionFactor); //do this conversion now to save a little time later
+
+const Fixed24 distanceThreshold(0.01F);
+
+const Vec3 cameraPos(0.25F, 0.25F, -1.0F);
+
+
 
 //Distance estimator for raymarching
 Fixed24 distanceEstimator(Vec3 pos) {
-    Fixed24 dist = pos.norm() - Fixed24(0.5F);
+    Fixed24 dist = pos.norm() - sphereRadius;
     return dist;
 }
 
-//Fast inverse square root from quake
-Fixed24 Q_rsqrt(Fixed24 x)
-{
-    float number = x.n / (float)(1 << POINT);
-    long i;
-    float x2, y;
-    const float threehalfs = 1.5F;
 
-    x2 = number * 0.5F;
-    y = number;
-    i = *(long*)&y;                       // evil floating point bit level hacking
-    i = 0x5f3759df - (i >> 1);               // what the fuck?
-    y = *(float*)&i;
-    y = y * (threehalfs - (x2 * y * y));   // 1st iteration
-    //	y  = y * ( threehalfs - ( x2 * y * y ) );   // 2nd iteration, this can be removed
+void rayMarch(Vec3& pos, Vec3& dirNorm, Fixed24& dist, uint16_t& count, Fixed24& total){
+    while (dist > distanceThreshold && count < 200) {
 
-    return Fixed24(y);
+        //Keep the ray within (-1,-1,-1) to (1,1,1), this is how there are infinite spheres
+        //While loops are faster than if statements for some reason
+        while (pos.x < Fixed24(-1)) pos.x += Fixed24(2);
+        while (pos.x > Fixed24(1)) pos.x -= Fixed24(2);
+        while (pos.y < Fixed24(-1)) pos.y += Fixed24(2);
+        while (pos.y > Fixed24(1)) pos.y -= Fixed24(2);
+        while (pos.z < Fixed24(-1)) pos.z += Fixed24(2);
+        while (pos.z > Fixed24(1)) pos.z -= Fixed24(2);
+
+        //Find the distance from the ray to the nearest sphere
+        dist = distanceEstimator(pos);
+        if (dist < Fixed24(0)) dist = Fixed24(0); //Just making sure... but it should never be
+
+        //March the ray forward as far as it can safely go
+        pos = pos + dirNorm * dist;
+     
+        count++;
+        total += dist;
+    }
+}
+
+
+void genStartVectors(Vec3& pos, Vec3& dirNorm, Fixed24 _x, Fixed24 _y){
+    //Ray start position on camera sensor
+    //Mapping from (0 -> 320,0 -> 160) to (-4/3*cameraWidth -> 4/3*cameraWidth, -cameraWidth -> cameraWidth)
+    pos.x = Fixed24(_x - Fixed24(160)) * multiplicationFactor + cameraPos.x;
+    pos.y = Fixed24(Fixed24(120) - _y) * multiplicationFactor + cameraPos.y;
+    pos.z = cameraPos.z;
+
+    //Direction vector of the ray
+    Vec3 dir;
+    dir.x = Fixed24(_x - Fixed24(160)) * divisionFactorReciprocal;
+    dir.y = Fixed24(Fixed24(120) - _y) * divisionFactorReciprocal;
+    dir.z = Fixed24(1);
+
+    //Normalized direction vector
+    Fixed24 len;
+    len = dir.norm();
+    dirNorm = dir * div(Fixed24(1), len);
+}
+
+
+void getRGB(int& r, int& g, int& b, Fixed24 dist, Fixed24 totalDist, Vec3 pos, Vec3 dirNorm, uint16_t count) {
+    Fixed24 lightness(0);
+    if (dist <= distanceThreshold) {
+        //Normalize position vector
+        //length = rayPos.norm();
+        //rayPosNorm = rayPos * div(Fixed24(1), length);
+        //Since the ray is touching a sphere at 0,0,0 with radius 0.5, the ray's length is 0.5, just *2 to get normal
+        //generalize this for different size spheres later
+        Vec3 posNorm = pos * Fixed24(2);
+
+        //Dot product of position and direction will give the cos of the angle the sphere was hit at (if you really think about it)
+        Fixed24 dotProduct = dot(posNorm, dirNorm);
+        if (dotProduct < Fixed24(0)) dotProduct = -dotProduct;
+        if (dotProduct > Fixed24(1)) dotProduct = Fixed24(1); //Should never be more than 1 because the vectors are normalized but just making sure
+
+        //Inverse square root of distance for lighting
+        Fixed24 invSqrt;
+        if (totalDist < Fixed24(1)) {
+            invSqrt = 1;
+        }
+        else {
+            invSqrt = div(Fixed24(1), sqrt(totalDist));
+        }
+
+
+        //Start with white, darken based on inverse square root and angle of incidence
+        lightness = Fixed24(31) * invSqrt * dotProduct;
+        int24_t lightnessInt = lightness.floor();
+
+
+        if (lightnessInt > 31) lightnessInt = 31; //Haha.. just to be careful
+        g = lightnessInt + (count >> 3);
+        if (g > 31) g = 31;
+        r = lightnessInt;
+        b = lightnessInt;
+
+    }
+    else {
+        g = 31;
+        r = 0;
+        b = 0;
+
+    }
 }
 
 
 int main(void)
 {
-    //Start gfx
-    gfx_Begin();
-    
-    //Create the pallate of grey
-    for (int p = 0; p < 255; p++) {
-        gfx_palette[p] = gfx_RGBTo1555(p, p, p);
-    }
-
-    //Clear the screen
-    gfx_FillScreen(0);
 
     // Start the timer
     clock_t start = clock();
 
     //Initializing variables
     Vec3 rayPos; //Ray position
-    Vec3 rayDir; //Direction vector of ray
     Fixed24 length;  //Used for normalizing
     Vec3 rayDirNorm;  //Normalized direction vector of ray 
     Fixed24 distance;  //Distance from ray to nearest object
@@ -62,17 +138,9 @@ int main(void)
     Fixed24 dotProd; //Dot product for lighting
     Fixed24 inverseSqrt; //Inverse square root for lighting
     Fixed24 lightness;
-
-    float cameraWidth = 0.25; //Actully camera height/2 but dont worry
-    Fixed24 multiplicationFactor(cameraWidth / 120.0F); //do this conversion now to save a little time later
-
-    float horizontalFov = 126.8698976F;
-    float divisionFactor(40 * tanf(3.14159F * horizontalFov / 360.0F));
-    Fixed24 divisionFactorReciprocal(1.0F / divisionFactor); //do this conversion now to save a little time later
-
-    Fixed24 distanceThreshold(0.01F);
-    
-    Vec3 cameraPos(0.25F, 0.25F, -1.0F);
+    int24_t r;
+    int24_t b;
+    int24_t g;
 
 
     //-----Main render loop
@@ -81,90 +149,34 @@ int main(void)
     for (int24_t x = 0; x < 320; x++) {
         for (int24_t y = 0; y < 240; y++) {
 
-            //Ray start position on camera sensor
-            //Mapping from (0 -> 320,0 -> 160) to (-4/3*cameraWidth -> 4/3*cameraWidth, -cameraWidth -> cameraWidth)
-            rayPos.x = Fixed24(x - 160) * multiplicationFactor + cameraPos.x;
-            rayPos.y = Fixed24(120 - y) * multiplicationFactor + cameraPos.y;
-            rayPos.z = cameraPos.z;
-
-            //Direction vector of the ray
-            rayDir.x = Fixed24(x - 160) * divisionFactorReciprocal;
-            rayDir.y = Fixed24(120 - y) * divisionFactorReciprocal;
-            rayDir.z = Fixed24(1);
-
-
-            //Normalized direction vector
-            length = rayDir.norm();
-            rayDirNorm = rayDir * div(Fixed24(1), length);
-
-
+            genStartVectors(rayPos, rayDirNorm, Fixed24(x), Fixed24(y));
+            
             distance = Fixed24(1);
             counter = 0;
             totalDistance = Fixed24(0);
-            //March forward 200 times
-            while (distance > distanceThreshold && counter < 200) {
-        
-                //Keep the ray within (-1,-1,-1) to (1,1,1), this is how there are infinite spheres
-                while (rayPos.x < Fixed24(-1)) rayPos.x += Fixed24(2);
-                while (rayPos.x > Fixed24(1)) rayPos.x -= Fixed24(2);
-                while (rayPos.y < Fixed24(-1)) rayPos.y += Fixed24(2);
-                while (rayPos.y > Fixed24(1)) rayPos.y -= Fixed24(2);
-                while (rayPos.z < Fixed24(-1)) rayPos.z += Fixed24(2);
-                while (rayPos.z > Fixed24(1)) rayPos.z -= Fixed24(2);
+            rayMarch(rayPos, rayDirNorm, distance, counter, totalDistance);
 
+            getRGB(r, g, b, distance, totalDistance, rayPos, rayDirNorm, counter);
+            
+            Color a = fromRGB(r, g, b);
+           
+            VRAM[x + 320 * y] = a;
 
-                //Find the distance from the ray to the nearest sphere
-                distance = distanceEstimator(rayPos);
-                if (distance < Fixed24(0)) distance = Fixed24(0); //Just making sure... but it should never be
-
-                //March the ray forward as far as it can safely go
-                rayPos = rayPos + rayDirNorm * distance;
-
-                counter++;
-                totalDistance += distance;
-            }
-
-            gfx_SetColor(0); //Color defaults to black if no circle was hit
-
-            if (distance <= distanceThreshold) {
-                //Normalize position vector
-                //length = rayPos.norm();
-                //rayPosNorm = rayPos * div(Fixed24(1), length);
-                //Since the ray is touching a sphere at 0,0,0 with radius 0.5, the ray's length is 0.5, just *2 to get normal
-                //generalize this for different size spheres later
-                rayPosNorm = rayPos * Fixed24(2);
-
-                //Dot product of position and direction will give the cos of the angle the sphere was hit at (if you really think about it)
-                dotProd = dot(rayPosNorm, rayDirNorm);
-                if (dotProd < Fixed24(0)) dotProd = -dotProd;
-                if (dotProd > Fixed24(1)) dotProd = Fixed24(1); //Should never be more than 1 because the vectors are normalized but just making sure
-
-                //Inverse square root of distance for lighting
-                if (totalDistance < Fixed24(1)) {
-                    inverseSqrt = 1;
-                }
-                else {
-                    //inverseSqrt = Q_rsqrt(totalDistance);
-                    inverseSqrt = div(Fixed24(1), sqrt(totalDistance));
-                }
-                
-
-                //Start with white, darken based on inverse square root and angle of incidence
-                //g = 255*invSqrt*dot1;
-                lightness = Fixed24(255) * inverseSqrt * dotProd;
-                if (lightness > Fixed24(255)) lightness = Fixed24(255); //Haha.. just to be careful
-                    
-                gfx_SetColor(lightness.floor());
-            }
-            gfx_SetPixel(x,y);
         }
     }
 
+    
     //Stop the timer
     clock_t end = clock();
 
     //Calculate the elapsed time in seconds
     int elapsed_time = (int)((end - start) / CLOCKS_PER_SEC);
+
+    //Waits for a key
+    while (!os_GetCSC());
+
+    gfx_Begin();
+    gfx_SetColor(0);
     //Print elapsed time
     gfx_SetTextXY(0, 210);
     gfx_PrintInt(elapsed_time, 5);

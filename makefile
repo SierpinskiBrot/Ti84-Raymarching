@@ -2,7 +2,7 @@
 # Makefile Options
 # ----------------------------
 
-NAME = DEMO
+NAME = RTX
 ICON = icon.png
 DESCRIPTION = "Raymarching"
 COMPRESSED = NO

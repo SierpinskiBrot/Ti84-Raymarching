@@ -1,0 +1,93 @@
+Section          Base   Top    High   Length
+---------------- ------ ------ ------ -------
+.icon            D1A882 D1A893            11h
+.init.libs       D1A893 D1A8EB            58h
+.libs            D1A8EB D1A912            27h
+.init.clock      D1A912 D1A92D            1Bh
+.init.reruncheck D1A92D D1A92D             0h
+.init            D1A92D D1A95B            2Eh
+.fini            D1A95B D1A98F            34h
+.text            D1A98F D1B55B           BCCh
+.data            D1B55B D1B55E             3h
+.rodata          D1B55E D1B580            22h
+.init_array      000000 000003             3h
+.ctors           000000 000000             0h
+.dtors           000000 000000             0h
+.fini_array      000000 000000             0h
+.bss             D052C6 D052DF D13FD8     19h
+.header          D1A87F D1A882             3h
+
+Label                                      Value
+----------------------------------------   ------
+___low_bss                               = D052C6
+___len_bss                               = 000019
+___heaptop                               = D13FD8
+___heapbot                               = D052DF
+___libs                                  = D1A8EB
+___init_array_count                      = 000001
+___ctors_count                           = 000000
+___dtors_count                           = 000000
+___fini_array_count                      = 000000
+__stack                                  = D1A87E
+__frameset                               = D1A98F
+__frameset0                              = D1A99D
+__ishl                                   = D1A9A8
+__ishrs                                  = D1A9D3
+__lshrs.hijack_lshru                     = D1AA1B
+__lshru                                  = D1AA2A
+__lsub                                   = D1AA3A
+__fmul                                   = 000288
+__ftol                                   = 00027C
+__ftoul                                  = 00027C
+__ltof                                   = 000284
+__setflag                                = 000218
+__ultof                                  = 000280
+__sor                                    = D1AA44
+__sshl                                   = D1A9A8
+__sshru                                  = D1AA4D
+__ixor                                   = D1AA5A
+_atomic_load_increasing_32               = D1AA71
+_os_DisableHomeTextBuffer                = D1AA96
+_os_EnableHomeTextBuffer                 = D1AAA8
+_os_GetCSC                               = 021D3C
+_clock                                   = D1AABA
+.missingappvar                           = D1B55E
+.libloadname                             = D1B563
+.libloadnamelen                          = 000007
+.webaddress                              = D1B56B
+___init_clock                            = D1A912
+__start                                  = D1A92D
+___exithl                                = D1A95B
+skip._exit                               = D1A95B
+skip.__Exit                              = D1A95B
+skip._abort                              = D1A95B
+_exit.sp                                 = D1A95C
+_exit.flash_wait_states                  = D1A966
+__GLOBAL__sub_I_main.cpp                 = D1AAC5
+__ZN7Fixed24C2Ef                         = D1AB18
+__ZN4Vec3C2Efff                          = D1AB39
+__Z3dotR4Vec3S0_                         = D1ABEF
+__ZN4Vec34normEv                         = D1AC4D
+__ZN4Vec312norm_squaredEv                = D1AC79
+__Z8rayMarchR4Vec3S0_R7Fixed24RtS2_      = D1ACBF
+__ZNK4Vec3mlE7Fixed24                    = D1AEE3
+__Z15genStartVectorsR4Vec3S0_7Fixed24S1_ = D1AF3D
+__Z6getRGBRiS_S_7Fixed24S0_4Vec3S1_t     = D1B040
+_main                                    = D1B1B8
+_VRAM                                    = D1B55B
+__ZL12sphereRadius                       = D052C6
+__ZL20multiplicationFactor               = D052C9
+__ZL14divisionFactor                     = D052CC
+__ZL24divisionFactorReciprocal           = D052D0
+__ZL17distanceThreshold                  = D052D3
+__ZL9cameraPos                           = D052D6
+_fp_mul                                  = D1B40C
+_fp_sqr                                  = D1B481
+_fp_div                                  = D1B4CC
+_fp_sqrt                                 = D1B51B
+lib.LibLoad                              = D1A8EB
+_#gfx_Begin                              = D1A8FE
+_#gfx_End                                = D1A902
+_#gfx_SetColor                           = D1A906
+_#gfx_PrintInt                           = D1A90A
+_#gfx_SetTextXY                          = D1A90E
